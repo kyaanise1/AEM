@@ -33,7 +33,18 @@ class AGSGDOptimizer(torch.optim.Optimizer):
                 angle_vals.append(dot / (pg.norm() * cg.norm() + 1e-8))
             angle = torch.acos(torch.mean(torch.tensor(angle_vals)).clamp(-1, 1)) / math.pi
 
-            coef_pg = -s * (2 * angle - 1)
+            # Calculate coef_pg based on the paper's requirements
+            if angle < 0.5:
+                # When a is in [0, 0.5), coef_pg is positive and inversely proportional to a
+                coef_pg = s * (1 - angle)
+            elif angle > 0.5:
+                # When a is in (0.5, 1.0], coef_pg is negative and inversely proportional to a
+                coef_pg = -s * (angle - 0.5)
+            else:
+                # When a is 0.5, coef_pg is 0
+                coef_pg = 0.0
+
+            # Calculate coef_cg as s - coef_pg
             coef_cg = s - coef_pg
 
             for p, pg, cg in zip(param_pairs, self.prev_grads, new_grads):

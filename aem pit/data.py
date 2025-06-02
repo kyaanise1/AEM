@@ -5,8 +5,8 @@ import os
 def get_mnist_loaders(batch_size=8):
     transform = transforms.ToTensor()
 
-    # Your custom MNIST path
-    data_path = r"C:\Users\User\AEM Final PIT - Copy\AEM\aem pit\data\MNIST"
+    # Use relative path for data directory
+    data_path = os.path.join(os.path.dirname(__file__), 'data', 'MNIST')
 
     train_dataset = datasets.MNIST(
         root=data_path, train=True, transform=transform, download=True)
