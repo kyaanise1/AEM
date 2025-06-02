@@ -5,11 +5,14 @@ class FCN(nn.Module):
         super().__init__()
         self.model = nn.Sequential(
             nn.Linear(784, 256),
-            nn.Sigmoid(),
+            nn.BatchNorm1d(256),
+            nn.ReLU(),
+            nn.Dropout(0.2),
             nn.Linear(256, 112),
-            nn.Sigmoid(),
-            nn.Linear(112, 10),
-            nn.Sigmoid()
+            nn.BatchNorm1d(112),
+            nn.ReLU(),
+            nn.Dropout(0.2),
+            nn.Linear(112, 10)
         )
 
     def forward(self, x):

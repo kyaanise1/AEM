@@ -1,7 +1,6 @@
 import torch
 from torch import nn
 from tqdm import tqdm
-from utils import to_one_hot
 
 def train_model(model, optimizer, train_loader, criterion, device, epochs=50):
     model.to(device)
@@ -12,7 +11,6 @@ def train_model(model, optimizer, train_loader, criterion, device, epochs=50):
         total_loss = 0.0
         for images, labels in tqdm(train_loader, desc=f"Epoch {epoch+1}/{epochs}", leave=False):
             images, labels = images.to(device), labels.to(device)
-            labels = to_one_hot(labels).to(device)
 
             optimizer.zero_grad()
             outputs = model(images)
