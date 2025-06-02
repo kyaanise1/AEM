@@ -18,11 +18,11 @@ def main():
     criterion = torch.nn.CrossEntropyLoss()
 
     optimizers_to_run = {
-        'Vanilla': lambda params: optim.SGD(params, lr=1),
+        #'Vanilla': lambda params: optim.SGD(params, lr=1),
         #'AdaGrad': lambda params: optim.Adagrad(params, lr=1.0),
         #'AdaDelta': lambda params: optim.Adadelta(params, lr=1.0),
-        'AG-SGD': lambda params: AGSGDOptimizer(params, s=1, d=0.90, iter_freq=10),
-        'NonLinear-AGSGD': lambda params: NonLinearAGSGDOptimizer(params, s=1, d=0.90, iter_freq=10, k=40.0),  # Much slower decay
+        #'AG-SGD': lambda params: AGSGDOptimizer(params, s=1, d=0.90, iter_freq=10),
+        'NonLinear-AGSGD': lambda params: NonLinearAGSGDOptimizer(params, s=1, d=0.999, iter_freq=10, k=20.0),  # More aggressive decay
     }
 
     all_costs = {}
