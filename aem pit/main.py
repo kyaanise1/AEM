@@ -19,10 +19,10 @@ def main():
 
     optimizers_to_run = {
         'Vanilla': lambda params: optim.SGD(params, lr=1),
-        #'AdaGrad': lambda params: optim.Adagrad(params, lr=1.0),
+        'AdaGrad': lambda params: optim.Adagrad(params, lr=1.0),
         'AdaDelta': lambda params: optim.Adadelta(params, lr=1.0),
         'AG-SGD': lambda params: AGSGDOptimizer(params, s=1, d=0.999, iter_freq=10),
-        #'NonLinear-AGSGD': lambda params: NonLinearAGSGDOptimizer(params, s=1, d=0.999, iter_freq=10, k=20.0),
+        'NonLinear-AGSGD': lambda params: NonLinearAGSGDOptimizer(params, s=0.5, d=0.999, iter_freq=10, k=20.0),  # Much slower decay
     }
 
     all_costs = {}
